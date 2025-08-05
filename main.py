@@ -59,6 +59,7 @@ def transform_excel_to_csv(input_path: str, output_path: str):
     # Save to CSV
     output.to_csv(output_path, index=False, encoding="utf-8")
     print(f"✅ Output saved to: {output_path}")
+    
 
 def batch_process_folder(folder_path: str):
     files = [f for f in os.listdir(folder_path) if f.endswith('.xlsx')]
@@ -68,9 +69,18 @@ def batch_process_folder(folder_path: str):
     
     for file in files: 
         input_path = os.path.join(folder_path, file)
-        output_base = os.path.splitext(file)[0]
+        output_base = os.path.splitext(os.path.basename(file))[0]
         output_path = f"test_out/{output_base}_transformed.csv"
         transform_excel_to_csv(input_path, output_path)
+        
+def process_file(file_path: str):
+    file = file_path if file_path.endswith('.xlsx') else None
+    if file: 
+        output_base = os.path.splittext(os.path.basename(file))[0]
+        output_path = f"{output_base}_transformed.csv"
+        transform_excel_to_csv(file_path, output_path)
+    else: 
+        print("❌ No Excel file found. It must be a '.xlsx' file.")
 
 
 if __name__ == "__main__":
